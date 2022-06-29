@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/lib/layui-v2.6.3/css/layui.css" media="all">
+  <link rel="stylesheet" href="/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- <div class="layui-card">
+    <div class="layui-card-header">小陈</div>
+    <div class="layui-card-body">
+      唯有热爱，可抵岁月漫长~
+    </div>
+  </div>
+  <div class="layui-card">
+    <div class="layui-card-header">小陈</div>
+    <div class="layui-card-body">
+      唯有热爱，可抵岁月漫长~
+    </div>
+  </div>
+  <div class="layui-card">
+    <div class="layui-card-header">小陈</div>
+    <div class="layui-card-body">
+      唯有热爱，可抵岁月漫长~
+    </div>
+  </div>-->
+
+  <div class="message"></div>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+  load();
+  function load() {
+    $.ajax({
+      url: "/message/",
+      type: "get",
+      success: function (data) {
+        var listHtml = "";
+        list = data.data;
+        $.each(list, function (index, n) {
+          listHtml += "<div class='layui-card'><div class='layui-card-header'>" + list[index].username +
+            "</div> <div class='layui-card-body'>" + list[index].messageContent + "</div></div>";
+        })
+        $(".message").append(listHtml);
+      }
+    })
+  }
+</script>
+
+</html>

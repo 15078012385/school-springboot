@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">ID</label>
+        <div class="layui-input-block">
+            <input type="text" name="id" id="textId" disabled class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+
+        <div class="layui-input-block">
+            <a id="test1"> <img id="image" th:src="@{/upload/img.png}" src="../../images/img.png"
+                                style="width: 100px;height: 100px"> </a>
+        </div>
+
+    </div>
+
+    <div class="layui-form-item" style="display:none" hidden>
+        <div class="layui-input-block">
+            <input type="text" name="avator" id="avator" class="layui-input" style="display:none" hidden>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">所属班级</label>
+        <div class="layui-input-block">
+            <input type="text" name="studentClass" id="studentClass" lay-verify="required" lay-reqtext="所属班级不能为空"
+                   placeholder="请输入用户名"
+                   value="" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="username" lay-verify="required" id="username" value=""
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">学号</label>
+        <div class="layui-input-block">
+            <input type="text" name="studentNumber" id="studentNumber" placeholder="请输入学号" value="" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">格言</label>
+        <div class="layui-input-block">
+            <textarea name="introduction" id="introduction" class="layui-textarea" placeholder="请输入格言信息"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</div>
+</div>
+<script src="/lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+<!--引入jquery-->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+
+    <!--    通过table中传来的id，再通过id从数据库中取出全部信息、然后填充。（vue中，可以直接把整个表单传到模态框中、不需要查询）-->
+    $(function () {
+        //js获取url中的参数
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return decodeURI(r[2]);
+            return null;
+        }
+
+        var id = GetQueryString('id');
+        $("#textId").val(id);
+        $.ajax({
+            url: "/student/" + id,
+            type: "get",
+            success: function (resp) {
+                console.log(resp.data);
+                var domain = resp.data;
+                $("#image").attr("src", domain.avator);
+                $("#avator").val(domain.avator);
+                $("#studentClass").val(domain.studentClass)
+                $("#username").val(domain.username)
+                $("#studentNumber").val(domain.studentNumber)
+                $("#introduction").val(domain.introduction)
+            }
+        })
+    })
+
+    layui.use('upload', function () {
+        let upload = layui.upload;
+        let $ = layui.$;
+        //执行实例
+        let uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            , url: '/file/upload' //上传接口
+            , done: function (res) {
+                if (res.code == 1) {
+                    layer.msg("上传成功");
+                    //获得图片的路径
+                    let src = res.data;
+                    //将图片进行回显
+                    $("#image").attr("src", src);
+                    //将图片的地址赋值给 form的隐藏域
+                    $("#imagePath").attr("value", src);
+                    $("#avator").val(res.data)
+                }
+            }
+        });
+    });
+
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            $.ajax({
+                url: "/student/saveOrUpdate",
+                data: JSON.stringify(data.field),
+                type: "post",
+                contentType: "application/json;charset=UTF-8",
+                success: function (rep) {
+                    if (rep.code == 200) {
+                        window.parent.location.reload();
+                    } else {
+                        layer.msg("更新失败，o(╥﹏╥)o")
+                    }
+                },
+                error: function () {
+                    layer.msg("找不到服务器，o(╥﹏╥)o")
+                }
+            })
+            var iframeIndex = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(iframeIndex);
+        });
+
+    });
+
+
+</script>
+</body>
+</html>

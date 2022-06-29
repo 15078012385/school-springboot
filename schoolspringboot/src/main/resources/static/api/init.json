@@ -1,0 +1,87 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "/page/welcome.html"
+  },
+  "logoInfo": {
+    "title": "智慧校园",
+    "image": "/images/logo.png",
+    "href": "javascript:void(0);"
+  },
+  "menuInfo": [
+    {
+      "title": "常规管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "主页",
+          "href": "/page/welcome.html",
+          "icon": "fa fa-home",
+          "target": "_self"
+        },
+        {
+          "title": "公告栏目",
+          "href": "/page/announcementColumn.html",
+          "icon": "fa fa-bullhorn",
+          "target": "_self"
+        },
+        {
+          "title": "公告管理",
+          "href": "/page/announcementManagement.html",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        },
+        {
+          "title": "学生管理",
+          "href": "/page/studentManagement.html",
+          "icon": "fa fa-child",
+          "target": "_self"
+        },
+        {
+          "title": "班级管理",
+          "href": "/page/classManagement.html",
+          "icon": "fa fa-tags",
+          "target": "_self"
+        },
+        {
+          "title": "教师管理",
+          "href": "/page/teacherManagement.html",
+          "icon": "fa fa-mortar-board",
+          "target": "_self"
+        },
+        {
+          "title": "年级管理",
+          "href": "/page/gradeManagement.html",
+          "icon": "fa fa-sitemap",
+          "target": "_self"
+        },
+        {
+          "title": "数据统计",
+          "href": "/page/dataStatistics.html",
+          "icon": "fa fa-bar-chart-o",
+          "target": "_self"
+        },
+        {
+          "title": "留言栏目",
+          "href": "/page/messageColumn.html",
+          "icon": "fa fa-envelope-square",
+          "target": "_self"
+        },
+        {
+          "title": "留言管理",
+          "href": "/page/messageManagement.html",
+          "icon": "fa fa-comments",
+          "target": "_self"
+        },
+        {
+          "title": "其它界面",
+          "href": "/page/404.html",
+          "icon": "fa fa-snowflake-o",
+          "target": ""
+        }
+      ]
+    }
+  ]
+}

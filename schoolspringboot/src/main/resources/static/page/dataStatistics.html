@@ -1,0 +1,72 @@
+<!--
+	THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=pie-roseType-simple&code=PYBwLglsB2AEC8sDeAoWsA2BTA5l6AJgFzJrqxigkDkARsGJQLbVkC-ANGZcBvQB4lU5WAGcAFsADuJMACcArli4iAZlgCGYBXKxCyIphrkBrIWMkyKirLE4HyBLRoBqELFaQXpsmx1i6GgQA8tAYAJ4kqhoYorb2Iui6opS65hI-1kp2KomiGgBuWACCogCSRnjplr7ZbA716AliWHLuoiQA2g7CidAaTHqw1AByEDjikNA4MbYAwuLGYNS5ImDhIEPUIO4rDklBEAodsJ0ArAAM_gBMlwC6q-QAxvhgrV3UlwCkK8Pf1A99gFgHEACobLbGTR7RKwCBvJgAZXW2H0sPQ9DkBFaACVDscSAAOIHNEROMAaLpA9BeAoxJQkAAsV1g_UGNEAZtqAfFdAA6mgHnE6g5anIWB0jAM2AAZkJ_jZW0At86Acr9-YLSYlafShpLrrKBltAJqmgAg9FVC9EisUSyUsuU0QAuesqBab0RrxUNrjLWXqaIBw00Ab3ImtUiF0S64ANl17OGgE1XQAAUQHHuggXcGmRk2wANxAA
+	请注意，该图表不是 Apache ECharts 官方示例，而是由用户代码生成的。请注意鉴别其内容。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN" style="height: 100%">
+
+<head>
+  <meta charset="utf-8">
+  　
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+
+<body style="height: 90%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+
+
+  <script type="text/javascript" src="/js/echarts.min.js">
+  </script>
+
+  <script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('container'));
+    myChart.setOption({
+      legend: {
+        top: 'bottom'
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          mark: { show: true },
+          dataView: { show: true, readOnly: false },
+          saveAsImage: { show: true }
+        }
+      },
+      series: [
+        {
+          name: '↓↓↓↓↓↓↓',
+          type: 'pie',
+          radius: [50, 250],
+          center: ['50%', '50%'],
+          roseType: 'area',
+          itemStyle: {
+            borderRadius: 8
+          },
+          data: []
+        }
+      ]
+    });
+
+    $.get('/dataStatistics/').done(function (data) {
+      // 填入数据
+      myChart.setOption({
+        series: [
+          {
+            data: data.data
+          }
+        ]
+      });
+    })
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+
+  </script>
+
+
+</body>
+
+</html>

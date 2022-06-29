@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+<div class="layui-form layuimini-form">
+
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">公告信息</label>
+        <div class="layui-input-block">
+            <textarea name="content" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+
+</div>
+
+<script src="/lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+
+<script>
+
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            $.ajax({
+                url: "/announcement/saveOrUpdate",
+                data: JSON.stringify(data.field),
+                type: "post",
+                contentType: "application/json;charset=UTF-8",
+                success: function (rep) {
+                    if (rep.code == 200) {
+                        window.parent.location.reload();
+                    } else {
+                        layer.msg("添加失败，o(╥﹏╥)o")
+                    }
+                },
+                error: function () {
+                    layer.msg("找不到服务器，o(╥﹏╥)o")
+                }
+            })
+            var iframeIndex = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(iframeIndex);
+
+        });
+
+    });
+
+
+</script>
+</body>
+
+</html>
